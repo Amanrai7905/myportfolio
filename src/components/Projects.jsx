@@ -12,26 +12,27 @@ export default function Projects() {
       : projects.filter((p) => p.category === activeCategory)
 
   return (
-      <section id="projects" ref={ref} className="max-w-5xl mx-auto px-4 sm:px-6 py-12 sm:py-16 md:py-20 border-t border-line">
-        <div className={`transition-all duration-700 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
-            <p className="endpoint-label mb-1.5 sm:mb-2">GET /projects</p>
-            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 sm:gap-4 mb-6">
-              <div>
-                  <h2 className="text-2xl sm:text-3xl font-bold text-text">Featured Projects</h2>
-                  <p className="text-dim text-xs sm:text-sm mt-1">
-                    Production systems, RESTful microservices, and full-stack solutions
-                  </p>
-              </div>
+    <section id="projects" ref={ref} className="max-w-5xl mx-auto px-4 sm:px-6 py-12 sm:py-16 md:py-20 border-t border-line">
+      <div className={`transition-all duration-700 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
+        <p className="endpoint-label mb-1.5 sm:mb-2">GET /projects</p>
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 sm:gap-4 mb-6">
+          <div>
+            <h2 className="text-2xl sm:text-3xl font-bold text-text">Featured Projects</h2>
+            <p className="text-dim text-xs sm:text-sm mt-1">
+              Production systems, RESTful microservices, and full-stack solutions
+            </p>
+          </div>
 
-                {/* Filter Categories: Scrollable / wrap on mobile */}
-                <div className="flex flex-wrap gap-1 sm:gap-1.5 bg-surface p-1 rounded-lg border border-line self-start sm:self-auto max-w-full">
-                  {projectCategories.map((cat) => (
-                    <button
-                      key={cat}
-                      onClick={() => setActiveCategory(cat)}
-                            ? 'bg-amber text-bg font-semibold shadow-sm'
-                            : 'text-dim hover:text-text'
-                          }`}
+          {/* Filter Categories: Scrollable / wrap on mobile */}
+          <div className="flex flex-wrap gap-1 sm:gap-1.5 bg-surface p-1 rounded-lg border border-line self-start sm:self-auto max-w-full">
+            {projectCategories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setActiveCategory(cat)}
+                className={`font-mono text-xs px-2.5 sm:px-3 py-1.5 rounded-md transition-all touch-manipulation min-h-[34px] ${activeCategory === cat
+                  ? 'bg-amber text-bg font-semibold shadow-sm'
+                  : 'text-dim hover:text-text'
+                  }`}
               >
                 {cat}
               </button>

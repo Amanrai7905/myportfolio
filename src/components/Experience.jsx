@@ -5,27 +5,28 @@ export default function Experience() {
   const [ref, inView] = useInView({ threshold: 0.1 })
 
   return (
-      <section id="experience" ref={ref} className="max-w-5xl mx-auto px-4 sm:px-6 py-12 sm:py-16 md:py-20 border-t border-line">
-        <div className={`transition-all duration-700 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
-            <p className="endpoint-label mb-1.5 sm:mb-2">GET /experience</p>
-            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2.5 sm:gap-4 mb-6 sm:mb-8">
-              <div>
-                <h2 className="text-2xl sm:text-3xl font-bold text-text">Professional Experience</h2>
-                <p className="text-dim text-xs sm:text-sm mt-1">Track record of enterprise software development and API delivery</p>
-              </div>
-              <span className="font-mono text-xs text-teal px-3 py-1 rounded bg-teal/10 border border-teal/20 self-start sm:self-auto">
-                3+ Years Total
-              </span>
-            </div>
+    <section id="experience" ref={ref} className="max-w-5xl mx-auto px-4 sm:px-6 py-12 sm:py-16 md:py-20 border-t border-line">
+      <div className={`transition-all duration-700 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
+        <p className="endpoint-label mb-1.5 sm:mb-2">GET /experience</p>
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2.5 sm:gap-4 mb-6 sm:mb-8">
+          <div>
+            <h2 className="text-2xl sm:text-3xl font-bold text-text">Professional Experience</h2>
+            <p className="text-dim text-xs sm:text-sm mt-1">Track record of enterprise software development and API delivery</p>
+          </div>
+          <span className="font-mono text-xs text-teal px-3 py-1 rounded bg-teal/10 border border-teal/20 self-start sm:self-auto">
+            3+ Years Total
+          </span>
+        </div>
 
-                  <div className="space-y-6 sm:space-y-8 relative before:absolute before:inset-0 before:left-3 before:w-0.5 before:bg-line">
-                    {experiences.map((exp) => (
-                      <div key={exp.company} className="relative pl-7 sm:pl-9 group">
-                        {/* Timeline marker perfectly centered at 12px */}
-                        <div
-                                ? 'border-teal shadow-[0_0_10px_rgba(63,201,176,0.5)]'
-                                : 'border-line group-hover:border-amber'
-                              }`}
+        <div className="space-y-6 sm:space-y-8 relative before:absolute before:inset-0 before:left-3 before:w-0.5 before:bg-line">
+          {experiences.map((exp) => (
+            <div key={exp.company} className="relative pl-7 sm:pl-9 group">
+              {/* Timeline marker perfectly centered at 12px */}
+              <div
+                className={`absolute left-3 -translate-x-1/2 top-2 w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full border-2 bg-bg flex items-center justify-center transition-all ${exp.isCurrent
+                  ? 'border-teal shadow-[0_0_10px_rgba(63,201,176,0.5)]'
+                  : 'border-line group-hover:border-amber'
+                  }`}
               >
                 {exp.isCurrent && <div className="w-1.5 h-1.5 rounded-full bg-teal animate-ping" />}
               </div>
