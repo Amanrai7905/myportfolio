@@ -1,64 +1,85 @@
-# Aman Rai — Portfolio
+# Aman Rai — .NET Developer Portfolio
 
-A one-page React portfolio built with Vite, React, and Tailwind CSS, pre-filled
-with your resume content. The design uses an "API request/response" motif
-throughout (nav links as routes, section labels as `GET /endpoint`) since it
-fits a backend/.NET developer's world.
+A modern, high-performance one-page developer portfolio built with **React**, **Vite**, and **Tailwind CSS**. Designed specifically around an **"API request/response" motif** (`GET /about`, `GET /projects`, `response.json`, status pills) tailored for a **.NET & Full-Stack Developer**.
 
-## Run it locally
+---
+
+## 🚀 Quick Start (Run Locally)
 
 ```bash
+cd portfolio
 npm install
 npm run dev
 ```
 
-Open the URL it prints (usually `http://localhost:5173`).
+Open the printed URL in your browser (usually `http://localhost:5173`).
 
-## Project structure
-
-```
-src/
-  App.jsx              # stacks all sections together
-  index.css            # global styles + Tailwind
-  components/
-    Navbar.jsx
-    Hero.jsx
-    About.jsx
-    Skills.jsx
-    Experience.jsx
-    Projects.jsx
-    Education.jsx
-    Contact.jsx
-    Footer.jsx
+To build for production:
+```bash
+npm run build
 ```
 
-Each section is its own file — edit the one you want to change without
-touching the others.
+---
 
-## Things to customize before you publish
+## 📁 Clean Architecture & Structure
 
-- **Projects.jsx** — add a real GitHub repo link and/or live demo link to
-  each project card once you have public ones. Right now they're informational
-  only.
-- **Hero.jsx** — the JSON "response" panel is the signature visual; keep it
-  in sync if your role/stack changes.
-- **Contact.jsx** — double check phone/email are ones you're comfortable
-  publishing publicly.
-- Consider adding a resume PDF download button in the Hero or Contact section
-  once you're happy with this build.
+All content is cleanly separated from UI components into dedicated data files inside `src/data/`:
 
-## Deploy it (free, ~2 minutes)
+```
+portfolio/
+├── public/                 # Static assets (Resume PDF, icons)
+├── src/
+│   ├── components/         # Modular UI sections
+│   │   ├── Navbar.jsx      # Sticky nav with scrollspy & social links
+│   │   ├── Hero.jsx        # Terminal code block, CV download, CTAs
+│   │   ├── About.jsx       # Summary & quick metrics
+│   │   ├── Skills.jsx      # Categorized competencies & tech stack
+│   │   ├── Experience.jsx  # Career timeline & quantified impact
+│   │   ├── Projects.jsx    # Project cards with category filters & private repo badges
+│   │   ├── Education.jsx   # Degree, institution & apprenticeship details
+│   │   ├── Contact.jsx     # Direct copy-to-clipboard, mailto form & socials
+│   │   └── Footer.jsx      # Back-to-top button & copyright
+│   │
+│   ├── data/               # Edit your portfolio content here!
+│   │   ├── personal.js     # Name, titles, email, phone, LinkedIn, GitHub
+│   │   ├── skills.js       # Grouped technical skills and proficiencies
+│   │   ├── projects.js     # Projects, architecture highlights, links, categories
+│   │   ├── experience.js   # Work experience, roles, achievements
+│   │   └── education.js    # Academic qualifications
+│   │
+│   ├── hooks/
+│   │   ├── useActiveSection.js # Scrollspy for navbar section tracking
+│   │   └── useInView.js        # Smooth viewport entrance animations
+│   │
+│   ├── App.jsx             # Main layout
+│   ├── main.jsx            # React root mount
+│   └── index.css           # Custom styles, custom scrollbar & animations
+```
 
-1. Push this project to a new GitHub repository.
-2. Go to [vercel.com](https://vercel.com) → New Project → import your repo.
-   Vercel auto-detects Vite and deploys with zero config.
-3. You'll get a live URL like `aman-rai-portfolio.vercel.app`
-   (you can rename it in Vercel's project settings).
-4. Every future `git push` auto-redeploys.
+---
 
-(Netlify works the same way if you prefer it.)
+## 🛠️ Personalization Checklist
 
-## Add it to LinkedIn
+1. **Add Your Resume PDF**:
+   - Place your resume PDF in the `portfolio/public/` folder named `resume.pdf` (or update `resumeUrl` in `src/data/personal.js`).
+2. **Update Contact Info**:
+   - In `src/data/personal.js`, make sure your email, phone, LinkedIn, and GitHub URLs are up to date.
+3. **Projects**:
+   - In `src/data/projects.js`, add your real GitHub repositories or live URLs whenever they become available.
+   - For confidential client projects, simply leave `isPrivate: true` to display the "Enterprise (Closed Source)" badge.
 
-Profile → **Add profile section** → **Featured** → **Add a link** → paste
-your deployed URL. You can also add it as your Website under **Contact info**.
+---
+
+## 🌐 Deploy to Vercel or Netlify (Free, 2 Minutes)
+
+1. Push this repository to your GitHub account:
+   ```bash
+   git init
+   git add .
+   git commit -m "feat: complete modern .NET portfolio"
+   git remote add origin https://github.com/<your-username>/<your-repo-name>.git
+   git push -u origin main
+   ```
+2. Log in to [vercel.com](https://vercel.com) → Click **Add New Project** → Import your repo.
+3. Vercel automatically detects Vite. Set Root Directory to `portfolio` if deploying the subfolder, then click **Deploy**.
+4. You will get a live URL (e.g. `aman-rai-portfolio.vercel.app`) with automatic SSL and fast global CDN!

@@ -10,15 +10,17 @@ import Footer from './components/Footer'
 
 export default function App() {
   return (
-    <div className="bg-bg min-h-screen">
+    <div className="bg-bg min-h-screen text-text selection:bg-amber selection:text-bg flex flex-col justify-between">
       <Navbar />
-      <Hero />
-      <About />
-      <Skills />
-      <Experience />
-      <Projects />
-      <Education />
-      <Contact />
+      <main>
+        <Hero />
+        <About />
+        <Skills />
+        <Experience />
+        <Projects />
+        <Education />
+        <Contact />
+      </main>
       <Footer />
     </div>
   )

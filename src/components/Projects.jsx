@@ -1,87 +1,143 @@
-import { useEffect, useState } from 'react'
-
-const projects = [
-  {
-    name: 'AI ChatBot',
-    stack: 'ASP.NET Core Web API · React.js · Groq API',
-    description:
-      'Full-stack AI chatbot with a secure backend that protects API keys, integrates the Groq API for LLM-powered responses, and optimizes error handling for reliable conversations.',
-    status: '200',
-  },
-  {
-    name: 'Eazyshopee',
-    stack: 'ASP.NET Core · SQL Server · REST API',
-    description:
-      'School registration and online book purchase platform with backend REST APIs, SQL Server data logic, and an optimized order-processing workflow.',
-    status: '200',
-  },
-  {
-    name: 'Pilgrim Book House',
-    stack: 'ASP.NET Core · SQL Server',
-    description:
-      'Online bookstore with SEO APIs and admin screens for dynamic Meta Title, Meta Description, and Keywords management, improving search visibility.',
-    status: '200',
-  },
-  {
-    name: 'School Management System',
-    stack: 'ASP.NET Core · SQL Server',
-    description:
-      'Web application for managing student and staff records, with REST APIs, a normalized SQL Server schema, and full CRUD operations.',
-    status: '200',
-  },
-]
+import { useState } from 'react'
+import { projects, projectCategories } from '../data/projects'
+import { useInView } from '../hooks/useInView'
 
 export default function Projects() {
-  const [mounted, setMounted] = useState(false)
+  const [ref, inView] = useInView({ threshold: 0.1 })
+  const [activeCategory, setActiveCategory] = useState('All')
 
-  useEffect(() => {
-    const t = setTimeout(() => setMounted(true), 80)
-    return () => clearTimeout(t)
-  }, [])
+  const filteredProjects =
+    activeCategory === 'All'
+      ? projects
+      : projects.filter((p) => p.category === activeCategory)
 
   return (
-    <section id="projects" className="max-w-5xl mx-auto px-6 py-16 border-t border-line">
-      <p className={`endpoint-label mb-3 ${mounted ? 'fade-up' : ''}`} style={{ animationDelay: '60ms' }}>GET /projects</p>
-      <h2 className={`text-2xl md:text-3xl font-bold text-text mb-8 ${mounted ? 'fade-up' : ''}`} style={{ animationDelay: '120ms' }}>Projects</h2>
+      <section id="projects" ref={ref} className="max-w-5xl mx-auto px-4 sm:px-6 py-12 sm:py-16 md:py-20 border-t border-line">
+        <div className={`transition-all duration-700 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
+            <p className="endpoint-label mb-1.5 sm:mb-2">GET /projects</p>
+            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 sm:gap-4 mb-6">
+              <div>
+                  <h2 className="text-2xl sm:text-3xl font-bold text-text">Featured Projects</h2>
+                  <p className="text-dim text-xs sm:text-sm mt-1">
+                    Production systems, RESTful microservices, and full-stack solutions
+                  </p>
+              </div>
 
-      <div className="grid md:grid-cols-2 gap-6">
-        {projects.map((project, i) => {
-          const chips = project.stack.split(' · ').slice(0, 4)
-          return (
+                {/* Filter Categories: Scrollable / wrap on mobile */}
+                <div className="flex flex-wrap gap-1 sm:gap-1.5 bg-surface p-1 rounded-lg border border-line self-start sm:self-auto max-w-full">
+                  {projectCategories.map((cat) => (
+                    <button
+                      key={cat}
+                      onClick={() => setActiveCategory(cat)}
+                            ? 'bg-amber text-bg font-semibold shadow-sm'
+                            : 'text-dim hover:text-text'
+                          }`}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Projects Grid: 1 column on mobile, 2 on md+ */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
+          {filteredProjects.map((project) => (
             <article
-              key={project.name}
-              className={`bg-surface border border-line rounded-lg p-6 transform-gpu hover:shadow-lg hover:-translate-y-1 transition-all card-entrance`}
-              style={{ animationDelay: `${i * 80}ms` }}
+              key={project.id}
+              className="bg-surface border border-line rounded-xl p-4 sm:p-6 flex flex-col justify-between hover:border-line/90 hover:-translate-y-1 transition-all duration-200 shadow-sm hover:shadow-lg group"
             >
-              <div className="flex items-start justify-between mb-3 gap-3">
-                <div>
-                  <h3 className="text-lg font-semibold text-text">{project.name}</h3>
-                  <p className="font-mono text-xs text-dim mt-1">{project.description.slice(0, 110)}{project.description.length > 110 ? '...' : ''}</p>
+              <div>
+                {/* Header: Name, Type, Status */}
+                <div className="flex items-start justify-between gap-2.5 mb-2.5 sm:mb-3">
+                  <div>
+                    <span className="text-[10px] sm:text-[11px] font-mono text-amber uppercase tracking-wider block mb-0.5 sm:mb-1">
+                      {project.type}
+                    </span>
+                    <h3 className="text-base sm:text-lg font-bold text-text group-hover:text-amber transition-colors">
+                      {project.name}
+                    </h3>
+                  </div>
+                  <span className="font-mono text-[10px] sm:text-[11px] px-2 py-0.5 rounded bg-teal/10 text-teal border border-teal/30 shrink-0 font-medium">
+                    {project.status}
+                  </span>
                 </div>
-                <span className="font-mono text-[11px] px-2 py-0.5 rounded bg-teal/10 text-teal border border-teal/30">
-                  {project.status} OK
-                </span>
+
+                {/* Summary */}
+                <p className="text-dim text-xs sm:text-sm leading-relaxed mb-3.5 sm:mb-4">
+                  {project.summary}
+                </p>
+
+                {/* Key Technical Highlights */}
+                {project.highlights && (
+                  <div className="mb-3.5 sm:mb-4 space-y-1.5 text-xs text-text/80">
+                    {project.highlights.map((h, i) => (
+                      <div key={i} className="flex items-start gap-2">
+                        <span className="text-teal font-bold shrink-0">✓</span>
+                        <span className="text-[11px] sm:text-xs">{h}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                {/* Stack Chips */}
+                <div className="flex flex-wrap gap-1.5 mb-4 sm:mb-5">
+                  {project.stack.map((c) => (
+                    <span
+                      key={c}
+                      className="text-[10px] sm:text-[11px] px-2 sm:px-2.5 py-0.5 sm:py-1 rounded bg-surfaceAlt border border-line text-dim font-mono skill-chip"
+                    >
+                      {c}
+                    </span>
+                  ))}
+                </div>
               </div>
 
-              <div className="flex flex-wrap gap-2 mb-4">
-                {chips.map((c) => (
-                  <span key={c} className="text-[11px] px-2 py-1 rounded-md bg-surfaceAlt border border-line text-dim skill-chip">{c}</span>
-                ))}
-              </div>
+              {/* Footer Actions: Fully responsive wrap */}
+              <div className="pt-3.5 sm:pt-4 border-t border-line/60 flex flex-wrap items-center justify-between gap-2.5">
+                <div className="flex flex-wrap items-center gap-2">
+                  {project.githubUrl && (
+                    <a
+                      href={project.githubUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-xs px-3 py-1.5 rounded-lg bg-amber text-bg font-semibold hover:opacity-95 transition-opacity btn-cta flex items-center gap-1.5 min-h-[36px]"
+                    >
+                      <span>View Code</span>
+                      <span>↗</span>
+                    </a>
+                  )}
 
-              <div className="flex items-center gap-3 mt-auto">
-                <a href="#" className="text-xs px-3 py-1.5 rounded bg-amber text-bg font-semibold hover:opacity-95 btn-cta">View repo</a>
-                <a href="#" className="text-xs px-3 py-1.5 rounded border border-line text-text hover:border-teal hover:text-teal transition-colors">Live</a>
-                <div className="ml-auto text-xs text-dim font-mono">Updated recently</div>
+                  {project.liveUrl && (
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-xs px-3 py-1.5 rounded-lg border border-line text-text hover:border-teal hover:text-teal transition-colors flex items-center gap-1.5 min-h-[36px]"
+                    >
+                      <span>Live Demo</span>
+                      <span>↗</span>
+                    </a>
+                  )}
+
+                  {project.isPrivate && (
+                    <span className="text-[11px] font-mono text-dim px-2.5 py-1.5 rounded-lg bg-surfaceAlt border border-line flex items-center gap-1.5 min-h-[36px]">
+                      <svg className="w-3 h-3 text-amber/80 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                      </svg>
+                      <span>Enterprise Code</span>
+                    </span>
+                  )}
+                </div>
+
+                <div className="text-[10px] sm:text-[11px] text-dim font-mono">
+                  {project.category}
+                </div>
               </div>
             </article>
-          )
-        })}
+          ))}
+        </div>
       </div>
-
-      <p className="text-dim text-xs mt-6 font-mono">
-        * Add live demo / GitHub links to each card once you have public repos or deployed URLs.
-      </p>
     </section>
   )
 }
