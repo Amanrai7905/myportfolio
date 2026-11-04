@@ -31,17 +31,20 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 border-b border-line bg-bg/90 backdrop-blur-md transition-all">
         <nav className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-3.5 flex items-center justify-between gap-3">
           {/* Logo / Monogram */}
-              <a href="#top" className="font-mono text-sm text-text tracking-wide flex items-center gap-2 group">
-                <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-md bg-amber/15 text-amber border border-amber/30 grid place-items-center font-bold text-xs group-hover:bg-amber group-hover:text-bg transition-colors">
+              <a href="#top" className="font-mono text-sm text-text tracking-wide flex items-center gap-3 group min-w-0">
+                <span className="relative w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-br from-amber to-red-500 text-white shadow-[0_10px_24px_rgba(229,57,53,0.2)] border border-amber/20 grid place-items-center font-black text-[10px] sm:text-xs tracking-[0.18em] transition-transform duration-200 group-hover:scale-105 group-hover:shadow-[0_12px_28px_rgba(229,57,53,0.28)]">
                   AR
+                  <span className="absolute inset-0 rounded-xl ring-1 ring-white/20" />
                 </span>
-                  <span className="flex items-center gap-1 font-medium">
-                    aman<span className="text-amber">.</span>rai
-                      <span className="hidden xs:inline-block text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-teal/10 text-teal border border-teal/20 ml-1">
-                        .NET
-                      </span>
-                    </span>
-                  </a>
+                <span className="flex items-center min-w-0">
+                  <span className="truncate text-base sm:text-lg font-semibold tracking-[-0.04em] text-text">
+                    Aman <span className="text-amber">Rai</span>
+                  </span>
+                  <span className="hidden xs:inline-block text-[9px] sm:text-[10px] uppercase font-mono px-1.5 py-0.5 rounded-full bg-teal/10 text-teal border border-teal/20 ml-2 align-middle">
+                    .NET Developer
+                  </span>
+                </span>
+              </a>
 
                   {/* Desktop Navigation Links */}
                     <ul className="hidden md:flex items-center gap-5 lg:gap-6">
