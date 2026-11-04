@@ -18,6 +18,7 @@ export const experiences = [
     ],
     techStack: [
       'C#',
+      'Python',
       'ASP.NET Core',
       '.NET 8',
       'Entity Framework Core',

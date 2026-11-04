@@ -9,11 +9,11 @@ export const personalInfo = {
   openToRelocate: true,
   status: 'Available for hire',
   email: 'amanrai965194@gmail.com',
-  phone: '+91 79058 04885',
+  phone: '+917905804885',
   phoneRaw: '7905804885',
   linkedin: 'https://linkedin.com/in/amanrai4885',
   github: 'https://github.com/Amanrai7905',
   resumeUrl: '/Aman_CV.pdf',
-  summary: `Results-driven .NET Developer with 3+ years of experience designing, developing, and maintaining enterprise web applications using ASP.NET Core, C#, Entity Framework Core, and SQL Server. I specialize in building secure RESTful APIs, implementing JWT authentication and RBAC, optimizing SQL queries, and integrating React.js front-ends. Comfortable with Docker, Redis caching, Hangfire background processing, and strictly following SOLID principles and Clean Architecture patterns.`,
+  summary: `Results-driven .NET Developer with 3.5+ years of experience designing, developing, and maintaining enterprise web applications using ASP.NET Core, C#, Entity Framework Core, and SQL Server. I specialize in building secure RESTful APIs, implementing JWT authentication and RBAC, optimizing SQL queries, and integrating React.js front-ends. Comfortable with Docker, Redis caching, Hangfire background processing, and strictly following SOLID principles and Clean Architecture patterns.`,
 }
 
