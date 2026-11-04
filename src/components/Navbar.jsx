@@ -29,7 +29,7 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-line bg-bg/90 backdrop-blur-md transition-all">
-        <nav className="max-w-5xl mx-auto px-4 sm:px-6 py-3 sm:py-3.5 flex items-center justify-between gap-3">
+        <nav className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-3.5 flex items-center justify-between gap-3">
           {/* Logo / Monogram */}
               <a href="#top" className="font-mono text-sm text-text tracking-wide flex items-center gap-2 group">
                 <span className="w-7 h-7 sm:w-8 sm:h-8 rounded-md bg-amber/15 text-amber border border-amber/30 grid place-items-center font-bold text-xs group-hover:bg-amber group-hover:text-bg transition-colors">

@@ -12,7 +12,7 @@ export default function Projects() {
       : projects.filter((p) => p.category === activeCategory)
 
   return (
-    <section id="projects" ref={ref} className="max-w-5xl mx-auto px-4 sm:px-6 py-12 sm:py-16 md:py-20 border-t border-line">
+    <section id="projects" ref={ref} className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 border-t border-line">
       <div className={`transition-all duration-700 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
         <p className="endpoint-label mb-1.5 sm:mb-2">GET /projects</p>
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3 sm:gap-4 mb-6">
@@ -24,7 +24,7 @@ export default function Projects() {
           </div>
 
           {/* Filter Categories: Scrollable / wrap on mobile */}
-          <div className="flex flex-wrap gap-1 sm:gap-1.5 bg-surface p-1 rounded-lg border border-line self-start sm:self-auto max-w-full">
+          <div className="flex flex-wrap gap-1 sm:gap-1.5 bg-surface p-1 rounded-lg border border-line self-start sm:self-auto max-w-full overflow-x-auto">
             {projectCategories.map((cat) => (
               <button
                 key={cat}

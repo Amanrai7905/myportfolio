@@ -7,7 +7,7 @@ export default function Footer() {
 
   return (
     <footer className="border-t border-line bg-surface/30">
-      <div className="max-w-5xl mx-auto px-6 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col sm:flex-row items-center justify-between gap-4">
         <div className="text-center sm:text-left">
           <p className="font-mono text-xs text-dim">
             © {new Date().getFullYear()} {personalInfo.name} — Built with React &amp; Tailwind CSS

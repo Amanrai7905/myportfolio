@@ -13,7 +13,7 @@ export default function About() {
   const [ref, inView] = useInView({ threshold: 0.15 })
 
   return (
-      <section id="about" ref={ref} className="max-w-5xl mx-auto px-4 sm:px-6 py-12 sm:py-16 md:py-20 border-t border-line">
+      <section id="about" ref={ref} className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 border-t border-line">
         <div className={`transition-all duration-700 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
             <p className="endpoint-label mb-1.5 sm:mb-2">GET /about</p>
             <h2 className="text-2xl sm:text-3xl font-bold text-text mb-5 sm:mb-6">

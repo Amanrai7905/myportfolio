@@ -29,14 +29,14 @@ export default function Hero() {
   }
 
   return (
-        <section id="top" ref={ref} className="relative max-w-5xl mx-auto px-4 sm:px-6 pt-8 pb-14 sm:pt-14 sm:pb-20 md:pt-20 md:pb-28">
+        <section id="top" ref={ref} className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-14 sm:pt-14 sm:pb-20 md:pt-20 md:pb-28 ambient-panel">
           <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
             {/* Left Column: Intro & CTAs */}
             <div>
               {/* Availability Badge */}
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal/10 border border-teal/30 text-teal font-mono text-xs mb-3 sm:mb-4">
-                  <span className="w-2 h-2 rounded-full bg-teal animate-pulse" />
-                  <span>Available for Full-time Roles</span>
+                <div className="inline-flex max-w-full items-center gap-2 px-3 py-1 rounded-full bg-teal/10 border border-teal/30 text-teal font-mono text-[11px] sm:text-xs mb-3 sm:mb-4">
+                  <span className="w-2 h-2 rounded-full bg-teal animate-pulse shrink-0" />
+                  <span className="whitespace-normal sm:whitespace-nowrap">Available for Full-time Roles</span>
                 </div>
 
                   <p className="endpoint-label mb-1.5 sm:mb-2">GET /developers/aman-rai</p>
@@ -53,18 +53,19 @@ export default function Hero() {
                       </p>
 
                         {/* Action Buttons: Responsive full-width on mobile, auto on sm+ */}
-                        <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3">
+                        <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-2.5 sm:gap-3 w-full sm:w-auto">
                           <a
                             href="#projects"
-                            className="px-5 py-2.5 sm:py-2.5 bg-amber text-bg font-semibold rounded-lg hover:brightness-110 btn-cta shadow-md shadow-amber/10 text-sm text-center min-h-[44px] flex items-center justify-center"
+                            className="w-full sm:w-auto px-5 py-2.5 sm:py-2.5 bg-amber text-bg font-semibold rounded-lg hover:brightness-110 btn-cta shadow-md shadow-amber/10 text-sm text-center min-h-[44px] flex items-center justify-center"
                           >
                             View projects
                           </a>
 
                           <a
                             href={personalInfo.resumeUrl}
-                            download="Aman_Rai_Resume.pdf"
-                            className="px-5 py-2.5 sm:py-2.5 border border-teal/70 text-teal hover:bg-teal hover:text-bg font-semibold rounded-lg transition-all btn-cta flex items-center justify-center gap-2 text-sm shadow-sm min-h-[44px]"
+                            target="_blank"
+                            rel="noreferrer"
+                            className="w-full sm:w-auto px-5 py-2.5 sm:py-2.5 border border-teal/70 text-teal hover:bg-teal hover:text-bg font-semibold rounded-lg transition-all btn-cta flex items-center justify-center gap-2 text-sm shadow-sm min-h-[44px]"
                           >
                               <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
@@ -74,14 +75,14 @@ export default function Hero() {
 
                           <a
                             href="#contact"
-                            className="px-5 py-2.5 sm:py-2.5 border border-line text-text/90 rounded-lg hover:border-amber hover:text-amber transition-colors btn-cta text-sm text-center min-h-[44px] flex items-center justify-center"
+                            className="w-full sm:w-auto px-5 py-2.5 sm:py-2.5 border border-line text-text/90 rounded-lg hover:border-amber hover:text-amber transition-colors btn-cta text-sm text-center min-h-[44px] flex items-center justify-center"
                           >
                             Get in touch
                           </a>
                         </div>
 
                         {/* Quick Social & Location Info */}
-                          <div className="mt-6 sm:mt-8 pt-5 sm:pt-6 border-t border-line/60 flex flex-wrap items-center gap-x-3 gap-y-2 text-xs text-dim font-mono">
+                          <div className="mt-6 sm:mt-8 pt-5 sm:pt-6 border-t border-line/60 flex flex-wrap items-center gap-x-3 gap-y-2 text-[11px] sm:text-xs text-dim font-mono">
                             <span className="flex items-center gap-1.5">
                               <span className="text-teal">📍</span> Mohali, India
                             </span>
@@ -101,7 +102,7 @@ export default function Hero() {
 
                         {/* Right Column: Interactive Terminal */}
                           <div className="relative mt-2 md:mt-0">
-                            <div className="relative bg-surface border border-line rounded-xl overflow-hidden shadow-2xl">
+                            <div className="hero-card relative bg-surface border border-line rounded-xl overflow-hidden shadow-soft">
                               {/* Ambient Background Blob */}
                               <div className="absolute -right-16 -top-10 hero-blob float-anim" aria-hidden="true" />
 

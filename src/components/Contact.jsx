@@ -1,12 +1,20 @@
-import { useState } from 'react'
+import emailjs from '@emailjs/browser'
+import { useRef, useState } from 'react'
 import { personalInfo } from '../data/personal'
 import { useInView } from '../hooks/useInView'
+
+const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID
+const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID
+const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+const emailJsConfigured = Boolean(serviceId && templateId && publicKey)
 
 export default function Contact() {
   const [ref, inView] = useInView({ threshold: 0.15 })
   const [copiedEmail, setCopiedEmail] = useState(false)
   const [formData, setFormData] = useState({ name: '', email: '', message: '' })
-  const [submitted, setSubmitted] = useState(false)
+  const [submitMessage, setSubmitMessage] = useState('')
+  const [isSending, setIsSending] = useState(false)
+  const formRef = useRef(null)
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(personalInfo.email)
@@ -14,18 +22,49 @@ export default function Contact() {
     setTimeout(() => setCopiedEmail(false), 2200)
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-    // Open default mail client with pre-filled subject and body
-    const subject = encodeURIComponent(`Portfolio Inquiry from ${formData.name || 'Visitor'}`)
-    const body = encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`)
-    window.location.href = `mailto:${personalInfo.email}?subject=${subject}&body=${body}`
-    setSubmitted(true)
-    setTimeout(() => setSubmitted(false), 5000)
+
+    const cleanName = formData.name.trim()
+    const cleanEmail = formData.email.trim()
+    const cleanMessage = formData.message.trim()
+
+    if (!cleanName || !cleanEmail || !cleanMessage) {
+      return
+    }
+
+    setIsSending(true)
+    setSubmitMessage('')
+
+    try {
+      if (!emailJsConfigured) {
+        throw new Error('EmailJS not configured')
+      }
+
+      await emailjs.sendForm(serviceId, templateId, formRef.current, publicKey)
+
+      setFormData({ name: '', email: '', message: '' })
+      setSubmitMessage('✅ Your message was sent successfully.')
+    } catch (error) {
+      const subject = `Portfolio Inquiry from ${cleanName}`
+      const body = [
+        `Name: ${cleanName}`,
+        `Email: ${cleanEmail}`,
+        '',
+        'Message:',
+        cleanMessage,
+      ].join('\n')
+
+      const mailtoLink = `mailto:${personalInfo.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+      window.location.href = mailtoLink
+      setSubmitMessage('⚠️ Email service is not configured yet, so your email client opened instead.')
+    } finally {
+      setIsSending(false)
+    }
   }
 
   return (
-    <section id="contact" ref={ref} className="max-w-5xl mx-auto px-6 py-20 border-t border-line">
+    <section id="contact" ref={ref} className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 md:py-20 border-t border-line">
       <div className={`transition-all duration-700 ${inView ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'}`}>
         <p className="endpoint-label mb-2">POST /contact</p>
         <h2 className="text-2xl md:text-4xl font-bold text-text mb-3">
@@ -38,9 +77,7 @@ export default function Contact() {
         </p>
 
         <div className="grid lg:grid-cols-12 gap-8 items-start">
-          {/* Direct Contact Channels */}
           <div className="lg:col-span-5 space-y-4">
-            {/* Email Card with 1-click Copy */}
             <div className="bg-surface border border-line rounded-xl p-5 hover:border-line/90 transition-all shadow-sm">
               <div className="flex items-center justify-between mb-2">
                 <span className="font-mono text-xs text-dim uppercase">Direct Email</span>
@@ -59,7 +96,6 @@ export default function Contact() {
               </a>
             </div>
 
-            {/* Phone Card */}
             <div className="bg-surface border border-line rounded-xl p-5 hover:border-line/90 transition-all shadow-sm">
               <span className="font-mono text-xs text-dim uppercase block mb-2">Phone / WhatsApp</span>
               <a
@@ -70,7 +106,6 @@ export default function Contact() {
               </a>
             </div>
 
-            {/* Social Links Row */}
             <div className="grid grid-cols-2 gap-3">
               <a
                 href={personalInfo.linkedin}
@@ -100,7 +135,6 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* Quick Contact Form */}
           <div className="lg:col-span-7 bg-surface border border-line rounded-xl p-6 md:p-7 shadow-sm">
             <h3 className="text-lg font-bold text-text mb-1 flex items-center gap-2">
               <span>Send a Quick Message</span>
@@ -109,10 +143,10 @@ export default function Contact() {
               </span>
             </h3>
             <p className="text-dim text-xs mb-5">
-              Fills your default email client directly with your message details.
+              Messages are sent through a real backend-powered email service when configured.
             </p>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form ref={formRef} onSubmit={handleSubmit} className="space-y-4">
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
                   <label htmlFor="name" className="block text-xs font-mono text-dim mb-1.5">
@@ -120,6 +154,7 @@ export default function Contact() {
                   </label>
                   <input
                     id="name"
+                    name="name"
                     type="text"
                     required
                     value={formData.name}
@@ -134,6 +169,7 @@ export default function Contact() {
                   </label>
                   <input
                     id="email"
+                    name="email"
                     type="email"
                     required
                     value={formData.email}
@@ -150,6 +186,7 @@ export default function Contact() {
                 </label>
                 <textarea
                   id="message"
+                  name="message"
                   required
                   rows={4}
                   value={formData.message}
@@ -159,18 +196,19 @@ export default function Contact() {
                 />
               </div>
 
-              <div className="flex items-center justify-between pt-2">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-2">
                 <button
                   type="submit"
-                  className="px-6 py-2.5 bg-amber text-bg font-semibold rounded hover:brightness-110 btn-cta shadow-md shadow-amber/10 text-sm flex items-center gap-2"
+                  disabled={isSending}
+                  className="w-full sm:w-auto px-6 py-2.5 bg-amber text-bg font-semibold rounded hover:brightness-110 btn-cta shadow-md shadow-amber/10 text-sm flex items-center justify-center gap-2 disabled:opacity-70 disabled:cursor-not-allowed"
                 >
-                  <span>Dispatch Message</span>
+                  <span>{isSending ? 'Sending...' : 'Dispatch Message'}</span>
                   <span className="font-mono">→</span>
                 </button>
 
-                {submitted && (
+                {submitMessage && (
                   <span className="text-xs font-mono text-teal animate-fade-in">
-                    ✓ Opening email client...
+                    {submitMessage}
                   </span>
                 )}
               </div>
